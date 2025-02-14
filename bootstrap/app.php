@@ -29,4 +29,17 @@ return Application::configure(basePath: dirname(__DIR__))
             // Handle other exceptions or default response here
             return $e->render($request);
         });
+
+        if (env('APP_ENV') == 'production') {
+            $exceptions->render(function (\Throwable $e, Request $request) {
+                if ($request->is('api/*')) {
+                    return response()->json([
+                        'statusCode' => 500,
+                        'status' => "error",
+                        'message' => 'Internal Server Error'
+                    ], 500);
+                }
+                return $e->render($request);
+            });
+        }
     })->create();

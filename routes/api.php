@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\KelasController;
+use App\Http\Controllers\api\SiswaController;
 use Illuminate\Support\Facades\Route;
 
 // Route Index API prefix
@@ -21,6 +22,14 @@ Route::controller(AuthController::class)->prefix('auth')->group(function () {
 });
 
 // Route Siswa Data
+Route::controller(SiswaController::class)->prefix('siswa')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', 'get')->name('siswa.get');
+    Route::get('/{id}', 'getDetail')->name('siswa.getDetail');
+    Route::post('/', 'create')->name('siswa.create');
+    Route::patch('/{id}', 'update')->name('siswa.update');
+    Route::delete('/{id}', 'delete')->name('siswa.delete');
+});
+
 
 // Route Kelas Data
 Route::controller(KelasController::class)->prefix("kelas")->middleware('auth:sanctum')->group(function () {

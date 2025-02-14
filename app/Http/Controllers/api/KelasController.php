@@ -63,6 +63,7 @@ class KelasController extends Controller
     {
         // Check ID
         $data = Kelas::where('id', $id);
+        $resData = $data->first();
         if ($data->get()->isEmpty()) {
             return response()->json(['statusCode' => 404, 'status' => 'error', 'message' => "Data Kelas Not Found!"], 404);
         }
@@ -71,7 +72,7 @@ class KelasController extends Controller
         $data->delete();
 
         // Return Response
-        return response()->json(['statusCode' => 200, 'status' => "success", "message" => "Data Kelas With ID=$id Success Deleted"], 200);
+        return new KelasResource($resData, 200, 'success', "Data Kelas With ID=$id Success Deleted!");
     }
 
     public function getDetail($id)
