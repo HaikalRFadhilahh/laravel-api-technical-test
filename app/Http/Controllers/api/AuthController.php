@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
@@ -33,5 +34,10 @@ class AuthController extends Controller
     {
         Auth::user()->tokens()->delete();
         return response()->json(['status' => 'success'], 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function validate()
+    {
+        return response()->json(['statusCode' => 200, 'status' => 'success', 'message' => "Data Users", 'data' => collect(Auth::user())], 200, ['Content-Type', 'application/json']);
     }
 }

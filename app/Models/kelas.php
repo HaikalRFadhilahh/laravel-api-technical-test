@@ -20,6 +20,8 @@ class Kelas extends Model
         'id'
     ];
 
+
+
     // Relation (Table Kelas)
     public function siswa(): HasMany
     {
