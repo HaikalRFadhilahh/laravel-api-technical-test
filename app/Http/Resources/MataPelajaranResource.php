@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class KelasResource extends JsonResource
+class MataPelajaranResource extends JsonResource
 {
     private $statusCode;
     private $status;
@@ -19,7 +19,6 @@ class KelasResource extends JsonResource
         $this->status = $s;
         $this->message = $m;
     }
-
     /**
      * Transform the resource into an array.
      *
@@ -27,7 +26,7 @@ class KelasResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // Jika data adalah pagination (LengthAwarePaginator)
+        // Paginate Mapping
         if ($this->resource instanceof LengthAwarePaginator) {
             return [
                 'statusCode' => $this->statusCode,
@@ -43,7 +42,7 @@ class KelasResource extends JsonResource
             ];
         }
 
-        // Jika data adalah object model biasa
+        // Non Paginate Data
         return [
             'statusCode' => $this->statusCode,
             'status' => $this->status,
@@ -51,22 +50,33 @@ class KelasResource extends JsonResource
             'data' => [
                 'id' => $this->id,
                 'nama' => $this->nama,
+                'guru_id' => $this->guru_id,
+                'guru' => $this->mapDataGuru($this->guru),
                 'createdAt' => $this->created_at,
-                'updatedAt' => $this->updated_at,
+                'updatedAt' => $this->updated_at
             ]
         ];
     }
 
-    /**
-     * Data Mapping
-     */
-    private function mapData($kelas)
+    private function mapData($items)
     {
         return [
-            'id' => $kelas->id,
-            'nama' => $kelas->nama,
-            'createdAt' => $kelas->created_at,
-            'updatedAt' => $kelas->updated_at,
+            'id' => $items->id,
+            'nama' => $items->nama,
+            'guru_id' => $items->guru_id,
+            'guru' => $this->mapDataGuru($items->guru),
+            'createdAt' => $items->created_at,
+            'updatedAt' => $items->updated_at
+        ];
+    }
+
+    private function mapDataGuru($i)
+    {
+        return [
+            'id' => $i->id,
+            'nama' => $i->nama,
+            'createdAt' => $i->created_at,
+            'updatedAt' => $i->updated_at,
         ];
     }
 }
