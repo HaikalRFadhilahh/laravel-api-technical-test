@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class guruKelas extends Model
+class GuruKelas extends Model
 {
     /** @use HasFactory<\Database\Factories\GuruKelasFactory> */
     use HasFactory;
@@ -20,4 +20,13 @@ class guruKelas extends Model
     ];
 
     // Declare Relation
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+    }
+
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'guru_id', 'id');
+    }
 }

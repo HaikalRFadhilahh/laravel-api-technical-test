@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class siswa extends Model
+class Siswa extends Model
 {
     /** @use HasFactory<\Database\Factories\SiswaFactory> */
     use HasFactory;
@@ -18,4 +19,11 @@ class siswa extends Model
     protected $guarded = [
         'id'
     ];
+
+    // Relation
+
+    public function kelas()
+    {
+        return $this->belongsTo(kelas::class, 'kelas_id', 'id');
+    }
 }
