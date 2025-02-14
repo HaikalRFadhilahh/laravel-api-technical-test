@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class UpdatekelasRequest extends FormRequest
+class LoginRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdatekelasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => 'required|email',
+            'password' => 'required|string'
         ];
     }
 }

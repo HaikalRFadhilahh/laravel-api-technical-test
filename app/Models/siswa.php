@@ -20,9 +20,8 @@ class Siswa extends Model
         'id'
     ];
 
-    // Relation
-
-    public function kelas()
+    // Relation (Table Siswa)
+    public function kelas(): BelongsTo
     {
         return $this->belongsTo(kelas::class, 'kelas_id', 'id');
     }
