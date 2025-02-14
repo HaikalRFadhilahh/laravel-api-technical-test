@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\BaseFormRequest;
 
 
-class UpdateSiswaRequest extends BaseFormRequest
+class UpdateGuruRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +24,7 @@ class UpdateSiswaRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'string|min:3',
-            'umur' => 'numeric|min:5',
-            'kelas_id' => 'numeric|exists:kelas,id'
+            'nama' => 'string|min:3'
         ];
     }
 }

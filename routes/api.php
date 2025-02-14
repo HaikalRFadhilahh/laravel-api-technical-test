@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\GuruController;
 use App\Http\Controllers\api\KelasController;
 use App\Http\Controllers\api\SiswaController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,13 @@ Route::controller(KelasController::class)->prefix("kelas")->middleware('auth:san
 });
 
 // Route Guru Data
+Route::controller(GuruController::class)->prefix('guru')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', 'get')->name('guru.get');
+    Route::get('/{id}', 'getDetail')->name('guru.getDetail');
+    Route::post('/', 'create')->name('guru.create');
+    Route::patch('/{id}', 'update')->name('guru.update');
+    Route::delete('/{id}', 'delete')->name('guru.delete');
+});
 
 // Route Mata Pelajaran Data
 

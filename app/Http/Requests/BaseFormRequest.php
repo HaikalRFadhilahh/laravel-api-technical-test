@@ -14,7 +14,7 @@ class BaseFormRequest extends FormRequest
             'statusCode' => 403,
             'status' => "error",
             "message" => "Forbidden"
-        ]));
+        ], 403));
     }
 
     protected function failedValidation(Validator $validator)
@@ -23,6 +23,6 @@ class BaseFormRequest extends FormRequest
             'statusCode' => 400,
             'status' => "error",
             "message" => $validator->errors()
-        ], 401));
+        ], 400));
     }
 }
