@@ -48,6 +48,7 @@ Route::controller(KelasController::class)->prefix("kelas")->middleware('auth:san
 // Route Guru Data
 Route::controller(GuruController::class)->prefix('guru')->middleware('auth:sanctum')->group(function () {
     Route::get('/', 'get')->name('guru.get');
+    Route::get('/getgururelationdata', 'getGuruRelationData')->name('guru.getGuruRelationData');
     Route::get('/{id}', 'getDetail')->name('guru.getDetail');
     Route::post('/', 'create')->name('guru.create');
     Route::patch('/{id}', 'update')->name('guru.update');

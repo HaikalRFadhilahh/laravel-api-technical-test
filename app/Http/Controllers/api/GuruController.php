@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateGuruRequest;
 use App\Http\Requests\UpdateGuruRequest;
+use App\Http\Resources\GuruRelationDataResource;
 use App\Http\Resources\GuruResource;
 
 class GuruController extends Controller
@@ -98,5 +99,27 @@ class GuruController extends Controller
 
         // Return Response With Json Resource
         return new GuruResource($resData, 200, 'success', 'Data Guru Success Deleted!');
+    }
+
+    public function getGuruRelationData(Request $request)
+    {
+        // Get Param Query
+        $search = $request->query('search');
+
+        // Get Data
+        $data = Guru::with('mataPelajaran', 'guruKelas', 'guruKelas.kelas', 'guruKelas.kelas.siswa')
+            ->orWhere('nama', 'LIKE', '%' . $search . '%')
+            ->orWhereHas('mataPelajaran', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', '%' . $search . '%');
+            })->orWhereHas('guruKelas.kelas', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', '%' . $search . '%');
+            })->orWhereHas('guruKelas.kelas.siswa', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', '%' . $search . '%');
+            })
+            ->paginate(10);
+
+
+        // Return Response with Json Resource
+        return new GuruRelationDataResource($data, 200, 'success', 'Data Relation Guru');
     }
 }
