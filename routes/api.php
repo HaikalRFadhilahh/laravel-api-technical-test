@@ -5,6 +5,7 @@ use App\Http\Controllers\api\GuruController;
 use App\Http\Controllers\api\KelasController;
 use App\Http\Controllers\api\MataPelajaranController;
 use App\Http\Controllers\api\SiswaController;
+use App\Http\Controllers\GuruKelasController;
 use Illuminate\Support\Facades\Route;
 
 // Route Index API prefix
@@ -61,7 +62,13 @@ Route::controller(MataPelajaranController::class)->prefix('matapelajaran')->midd
 });
 
 // Route Pivot Table Guru & Kelas Data
-
+Route::controller(GuruKelasController::class)->prefix('gurukelas')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', 'get')->name('gurukelas.get');
+    Route::get('/{id}', 'getDetail')->name('gurukelas.getDetail');
+    Route::post('/', 'create')->name('gurukelas.create');
+    Route::patch('/{id}', 'update')->name('gurukelas.update');
+    Route::delete('/{id}', 'delete')->name('gurukelas.delete');
+});
 
 // Not Found Route
 Route::fallback(function () {
