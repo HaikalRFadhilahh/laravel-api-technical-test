@@ -37,6 +37,8 @@ Route::controller(SiswaController::class)->prefix('siswa')->middleware('auth:san
 // Route Kelas Data
 Route::controller(KelasController::class)->prefix("kelas")->middleware('auth:sanctum')->group(function () {
     Route::get('/', 'get')->name('kelas.get');
+    Route::get('/siswabykelas', 'getSiswaByKelas')->name('kelas.getSiswaByKelas');
+    Route::get('/gurubykelas', 'getGuruByKelas')->name('kelas.getGuruByKelas');
     Route::get('/{id}', 'getDetail')->name('kelas.getDetail');
     Route::post('/', 'create')->name('kelas.create');
     Route::patch('/{id}', 'update')->name('kelas.update');

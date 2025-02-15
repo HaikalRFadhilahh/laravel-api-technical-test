@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\KelasResource;
 use App\Http\Requests\CreateKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
+use App\Http\Resources\GuruByKelasResource;
+use App\Http\Resources\SiswaByKelasResource;
 
 class KelasController extends Controller
 {
@@ -86,5 +88,41 @@ class KelasController extends Controller
 
         // Return Response
         return new KelasResource($data, 200, "success", "Data Detail Kelas with ID=$id");
+    }
+
+    public function getSiswaByKelas(Request $request)
+    {
+        // Get Data Query param
+        $search = $request->query('search');
+
+        // Data
+        $data = Kelas::with('siswa')
+            ->orWhere('nama', 'LIKE', '%' . $search . '%')
+            ->orWhereHas('siswa', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', '%' . $search . '%');
+            })
+            ->paginate(10);
+
+
+        // Return Response With Json Resource
+        return new SiswaByKelasResource($data, 200, 'success', 'Data Siswa Group By Kelas');
+    }
+
+    public function getGuruByKelas(Request $request)
+    {
+        // Get Query Serach
+        $search = $request->query('search');
+
+        // Get Data
+        $data = Kelas::has('guruKelas')
+            ->with('guruKelas', 'guruKelas.guru')
+            ->orWhere('nama', 'LIKE', '%' . $search . '%')
+            ->orWhereHas('guruKelas.guru', function ($q) use ($search) {
+                $q->where('nama', 'LIKE', '%' . $search . '%');
+            })
+            ->paginate(10);
+
+        // Return Response With Json Resource
+        return new GuruByKelasResource($data, 200, 'success', 'Data Guru By Kelas');
     }
 }
