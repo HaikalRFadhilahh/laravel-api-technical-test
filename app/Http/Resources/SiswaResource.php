@@ -58,7 +58,7 @@ class SiswaResource extends JsonResource
                 'id' => $this->id,
                 'nama' => $this->nama,
                 'umur' => $this->umur,
-                'kelas_id' => $this->kelas_id,
+                'kelasId' => $this->kelas_id,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
                 'kelas' => [
@@ -77,7 +77,7 @@ class SiswaResource extends JsonResource
             'id' => $item->id,
             'nama' => $item->nama,
             'umur' => $item->umur,
-            'kelas_id' => $item->kelas_id,
+            'kelasId' => $item->kelas_id,
             'createdAt' => $item->created_at,
             'updatedAt' => $item->updated_at,
             'kelas' => [

@@ -25,7 +25,14 @@ class CreateSiswaRequest extends BaseFormRequest
         return [
             'nama' => 'required|string|min:3',
             'umur' => 'required|numeric|min:5',
-            'kelas_id' => 'required|numeric|exists:kelas,id'
+            'kelasId' => 'required|numeric|exists:kelas,id'
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'kelas_id' => $this->kelasId
+        ]);
     }
 }

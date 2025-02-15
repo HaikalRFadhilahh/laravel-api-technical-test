@@ -50,7 +50,7 @@ class MataPelajaranResource extends JsonResource
             'data' => [
                 'id' => $this->id,
                 'nama' => $this->nama,
-                'guru_id' => $this->guru_id,
+                'guruId' => $this->guru_id,
                 'guru' => $this->mapDataGuru($this->guru),
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at
@@ -63,7 +63,7 @@ class MataPelajaranResource extends JsonResource
         return [
             'id' => $items->id,
             'nama' => $items->nama,
-            'guru_id' => $items->guru_id,
+            'guruId' => $items->guru_id,
             'guru' => $this->mapDataGuru($items->guru),
             'createdAt' => $items->created_at,
             'updatedAt' => $items->updated_at

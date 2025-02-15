@@ -4,8 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 
-
-class UpdateSiswaRequest extends BaseFormRequest
+class CreateMataPelajaranRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,18 +22,15 @@ class UpdateSiswaRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'string|min:3',
-            'umur' => 'numeric|min:5',
-            'kelasId' => 'numeric|exists:kelas,id'
+            'nama' => 'required|string|min:3',
+            'guruId' => 'required|numeric|exists:guru,id'
         ];
     }
 
     public function prepareForValidation()
     {
-        if ($this->filled('keladId')) {
-            $this->merge([
-                'kelas_id' => $this->kelasId,
-            ]);
-        }
+        $this->merge([
+            'guru_id' => $this->guruId
+        ]);
     }
 }
